@@ -1,0 +1,187 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: hsla(0, 100%, 100%, 0.82);
+  background-image: url('images/bg-image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: "Space Grotesk", sans-serif;
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+}
+
+.main-container {
+  margin-top: -60px;
+}
+
+.connect-button-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.connect-button {
+  padding: 10px 20px;
+  background-color: rgb(30, 29, 29);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.connect-button:hover {
+  background-color: rgb(62, 58, 58);
+  border-radius: 15px;
+}
+
+h1 {
+  color: rgb(255, 255, 255);
+  background-color: rgba(46, 46, 46, 0.4);
+  width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  margin: 100px auto;
+  margin-bottom: -60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.page-container {
+  background-color: rgba(46, 46, 46, 0.4);
+  width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #1b1b1b;
+  color: white;
+}
+
+input[type="number"]::placeholder {
+  color: #bbb;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.fund-button {
+  background-color: #28a745;
+  width: 150px;
+}
+
+.fund-button:hover {
+  background-color: #218838;
+  width: 155px;
+
+}
+
+.withdraw-button {
+  background-color: #dc3545;
+  width: 150px;
+}
+
+.withdraw-button:hover {
+  background-color: #c82333;
+  width: 155px;
+}
+
+.balance-button {
+  background-color: #1f8efa;
+  width: 150px;
+}
+
+.balance-button:hover {
+  background-color: #0f6fc0;
+  width: 155px;
+}
+
+.balance-div {
+  margin-top: 10px;
+  color: white;
+  font-size: 16px;
+}
+
+@media only screen and (max-width: 480px) {
+  body {
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .main-container {
+    margin-top: -30px;
+  }
+
+  h1 {
+    width: 90%;
+    padding: 15px;
+    font-size: 1.5rem;
+    margin: 50px auto;
+  }
+
+  .page-container {
+    width: 90%;
+    padding: 15px;
+    font-size: 1rem;
+    margin: 50px auto;
+  }
+
+  input[type="number"] {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .fund-button,
+  .withdraw-button,
+  .balance-button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .fund-button:hover,
+  .withdraw-button:hover,
+  .balance-button:hover {
+    width: 100%;
+  }
+
+  .connect-button-container {
+    justify-content: flex-end;
+    padding: 10px;
+  }
+
+  .balance-div {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
