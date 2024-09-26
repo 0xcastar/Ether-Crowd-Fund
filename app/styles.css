@@ -1,8 +1,9 @@
 body {
   margin: 0;
   padding: 0;
+  padding-bottom: 200px;
   background-color: hsla(0, 100%, 100%, 0.82);
-  background-image: url('images/bg-image.jpg');
+  background-image: url('images/bg-image(2).jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -50,6 +51,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   backdrop-filter: blur(10px);
+  border: 0.5px solid white;
 }
 
 .page-container {
@@ -63,7 +65,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   backdrop-filter: blur(10px);
-
+  border: 0.5px solid white;
 }
 
 input[type="number"] {
@@ -109,6 +111,41 @@ button {
 .withdraw-button:hover {
   background-color: #c82333;
   width: 155px;
+}
+
+.message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: hsl(0, 1%, 23%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  25% {
+    transform: translateX(-55%);
+  }
+
+  50% {
+    transform: translateX(-50%);
+  }
+
+  75% {
+    transform: translateX(-45%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .balance-button {
