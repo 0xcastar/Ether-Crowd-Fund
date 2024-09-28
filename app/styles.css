@@ -3,7 +3,7 @@ body {
   padding: 0;
   padding-bottom: 200px;
   background-color: hsla(0, 100%, 100%, 0.82);
-  background-image: url('images/bg-image(2).jpg');
+  background-image: url('images/bg-image.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -35,7 +35,13 @@ body {
 
 .connect-button:hover {
   background-color: rgb(62, 58, 58);
+  border-radius: 20px;
+}
+
+.connect-button:active {
+  background-color: rgb(51, 50, 50);
   border-radius: 15px;
+  transform: scale(0.9);
 }
 
 h1 {
@@ -98,19 +104,29 @@ button {
 }
 
 .fund-button:hover {
-  background-color: #218838;
+  background-color: hsl(133, 61%, 33%);
   width: 155px;
 
 }
 
+.fund-button:active {
+  background-color: hsl(133, 56%, 46%);
+  transform: scale(0.9);
+}
+
 .withdraw-button {
-  background-color: #dc3545;
+  background-color: hsl(354, 70%, 54%);
   width: 150px;
 }
 
 .withdraw-button:hover {
-  background-color: #c82333;
+  background-color: hsl(354, 70%, 46%);
   width: 155px;
+}
+
+.withdraw-button:active {
+  background-color: hsl(354, 77%, 57%);
+  transform: scale(0.9);
 }
 
 .message {
@@ -149,13 +165,18 @@ button {
 }
 
 .balance-button {
-  background-color: #1f8efa;
+  background-color: hsl(210, 96%, 55%);
   width: 150px;
 }
 
 .balance-button:hover {
-  background-color: #0f6fc0;
+  background-color: hsl(207, 86%, 41%);
   width: 155px;
+}
+
+.balance-button:active {
+  background-color: hsl(207, 75%, 48%);
+  transform: scale(0.9);
 }
 
 .balance-div {

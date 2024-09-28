@@ -10,15 +10,15 @@ export default function Home() {
   const [ethValue, setEthValue] = useState("");
   const [contractBalance, setContractBalance] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
-  const [message, setMessage] = useState(""); // Message to show
-  const [showMessage, setShowMessage] = useState(false); // Control visibility
+  const [message, setMessage] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
 
 
   useEffect(() => {
     const checkConnection = async () => {
       if (typeof window.ethereum !== "undefined") {
         const accounts = await window.ethereum.request({ method: "eth_accounts" });
-        setWalletAddress(accounts);
+        setWalletAddress(accounts[0]);
         if (accounts.length > 0) {
           setIsConnected(true);
           const provider = new ethers.BrowserProvider(window.ethereum);
@@ -46,7 +46,8 @@ export default function Home() {
       } catch (e) {
         console.log(e);
       }
-    } else {
+    } else if (typeof window.ethereum === "undefined") {
+      displayMessage("Please install Metamask")
       console.log("Please install MetaMask!");
     }
   }
@@ -62,43 +63,35 @@ export default function Home() {
 
 
   async function handleFund() {
+    if (!ethValue || isNaN(ethValue) || Number(ethValue) <= 0) {
+      // setMessage("Please input a valid value.");
+      // setShowMessage(true);
+      // setTimeout(() => {
+      //   setShowMessage(false);
+      // }, 3000);
+      displayMessage("Please input a valid Value!")
+      return;
+    }
     if (isConnected && signer) {
       const contract = new ethers.Contract(address, abi, signer);
       try {
         setEthValue("");
-        setMessage("Processing...");
-        setShowMessage(true);
-        setTimeout(() => {
-          setShowMessage(false);
-        }, 3000);
+        displayMessage("Processing...")
         const transactionResponse = await contract.fund({
           value: ethers.parseEther(ethValue),
         });
         await transactionResponse.wait(1);
         setEthValue("");
-        setMessage("Funding Successful!");
-        setShowMessage(true);
-        setTimeout(() => {
-          setShowMessage(false);
-        }, 3000);
+        displayMessage("Funding successful!")
         console.log("Funding successful!");
         console.log("The input value is:", ethValue);
       } catch (error) {
         console.log("Error occured during funding:", error);
         setEthValue("");
-        setMessage("Error occured during funding!");
-        setShowMessage(true);
-        setTimeout(() => {
-          setShowMessage(false);
-        }, 3000);
+        displayMessage("Error occured during funding...")
       }
     } else {
-      console.log("Please connect your Metamask.");
-      setMessage("An error occured...");
-      setShowMessage(true);
-      setTimeout(() => {
-        setShowMessage(false);
-      }, 3000);
+      displayMessage("Please connect your Metamask");
     }
   }
 
@@ -107,41 +100,31 @@ export default function Home() {
       const contract = new ethers.Contract(address, abi, signer);
       if (signer.address === "0x4efDce2b3Fc96cA78820F88fE01F845121Ed0330") {
         try {
-          setMessage("Withdrawal Processing...");
-          setShowMessage(true);
-          setTimeout(() => {
-            setShowMessage(false);
-          }, 3000);
+          displayMessage("Withdrawal Processing...");
           const transactionResponse = await contract.withdraw();
           console.log("Withdraw Pending...");
           await transactionResponse.wait(1);
           console.log("Withdraw Successful!");
-          setMessage("Withdrawal Successful!");
-          setShowMessage(true);
-          setTimeout(() => {
-            setShowMessage(false);
-          }, 3000);
+          displayMessage("Withdraw Successful!")
         } catch (e) {
-          setMessage("Withdrawal Error!");
-          setShowMessage(true);
-          setTimeout(() => {
-            setShowMessage(false);
-          }, 3000);
+          displayMessage("Withdrawal error!")
           console.log("Withdrawal error!");
         }
       } else {
-        // Show the message if the user cannot withdraw
-        setMessage("This user cannot withdraw.");
-        setShowMessage(true);
-        setTimeout(() => {
-          setShowMessage(false);
-        }, 5000); // Hide message after 5 seconds
+        displayMessage("This user cannot withdraw.")
       }
     } else {
       console.log("Please connect your MetaMask!");
     }
   }
 
+  function displayMessage(message) {
+    setMessage(message);
+    setShowMessage(true);
+    setTimeout(() => {
+      setMessage(false);
+    }, 3000)
+  }
 
   async function handleGetBalance() {
     if (isConnected && signer) {
@@ -171,7 +154,7 @@ export default function Home() {
       {showMessage && <div className="message">{message}</div>}
       <div className="connect-button-container">
         {
-          isConnected ? <button className="connect-button" onClick={handleDisconnect}>Dissconect</button> :
+          isConnected ? <button className="connect-button" onClick={handleDisconnect}>{walletAddress.length > 0 ? `Disconnect ${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}` : "Connect Metamask"}</button> :
             <button className="connect-button" onClick={connectWallet}>Connect Metamask</button>
         }
       </div>
