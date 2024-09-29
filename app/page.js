@@ -31,7 +31,11 @@ export default function Home() {
     };
 
     checkConnection();
+    addEventListener();
   }, []);
+
+
+
 
   async function connectWallet() {
     if (typeof window.ethereum !== "undefined") {
@@ -47,8 +51,19 @@ export default function Home() {
         console.log(e);
       }
     } else if (typeof window.ethereum === "undefined") {
-      displayMessage("Please install Metamask")
-      console.log("Please install MetaMask!");
+      displayMessage("Please install Metamask!")
+    }
+  }
+
+  const addEventListener = async () => {
+    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+      window.ethereum.on("accountsChanged", (accounts) => {
+        setWalletAddress(accounts[0]);
+        console.log(accounts[0]);
+      })
+    } else {
+      setWalletAddress("")
+      console.log("Please install Metamask")
     }
   }
 
@@ -58,17 +73,14 @@ export default function Home() {
     setEthValue("");
     setContractBalance("");
     localStorage.removeItem("isConnected");
+    displayMessage("Disconected.")
+    setIsConnected(false);
     console.log("Wallet disconnected.");
   };
 
 
   async function handleFund() {
     if (!ethValue || isNaN(ethValue) || Number(ethValue) <= 0) {
-      // setMessage("Please input a valid value.");
-      // setShowMessage(true);
-      // setTimeout(() => {
-      //   setShowMessage(false);
-      // }, 3000);
       displayMessage("Please input a valid Value!")
       return;
     }
@@ -91,7 +103,7 @@ export default function Home() {
         displayMessage("Error occured during funding...")
       }
     } else {
-      displayMessage("Please connect your Metamask");
+      displayMessage("Please connect your Metamask!");
     }
   }
 
@@ -114,6 +126,7 @@ export default function Home() {
         displayMessage("This user cannot withdraw.")
       }
     } else {
+      displayMessage("Please connect your Metamask!")
       console.log("Please connect your MetaMask!");
     }
   }
@@ -138,6 +151,7 @@ export default function Home() {
         console.log(e)
       }
     } else {
+      displayMessage("Please connect your Metamask!")
       console.log("Please connect your Metamask!")
     }
   }
@@ -154,7 +168,11 @@ export default function Home() {
       {showMessage && <div className="message">{message}</div>}
       <div className="connect-button-container">
         {
-          isConnected ? <button className="connect-button" onClick={handleDisconnect}>{walletAddress.length > 0 ? `Disconnect ${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}` : "Connect Metamask"}</button> :
+          isConnected ? <button className="connect-button" onClick={handleDisconnect}>
+            {
+              walletAddress && walletAddress.length > 0 ?
+                `Disconnect: ${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 4)}` : "Connect Metamask"
+            }</button> :
             <button className="connect-button" onClick={connectWallet}>Connect Metamask</button>
         }
       </div>
