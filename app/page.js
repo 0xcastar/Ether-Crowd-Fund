@@ -55,6 +55,7 @@ export default function Home() {
     }
   }
 
+  //To update the wallet change 
   const addEventListener = async () => {
     if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
       window.ethereum.on("accountsChanged", (accounts) => {
