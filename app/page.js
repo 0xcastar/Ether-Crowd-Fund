@@ -137,6 +137,7 @@ export default function Home() {
     setShowMessage(true);
     setTimeout(() => {
       setMessage(false);
+      setShowMessage(false);
     }, 3000)
   }
 
