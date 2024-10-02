@@ -34,9 +34,6 @@ export default function Home() {
     addEventListener();
   }, []);
 
-
-
-
   async function connectWallet() {
     if (typeof window.ethereum !== "undefined") {
       try {
@@ -47,6 +44,10 @@ export default function Home() {
         setSigner(signer);
         localStorage.setItem(isConnected, true);
         console.log("Wallet connected and signer set:", signer);
+
+        await switchToSepolia();
+        displayMessage("Connected✅");
+
       } catch (e) {
         console.log(e);
       }
@@ -55,7 +56,7 @@ export default function Home() {
     }
   }
 
-  //To update the wallet change 
+
   const addEventListener = async () => {
     if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
       window.ethereum.on("accountsChanged", (accounts) => {
@@ -78,6 +79,45 @@ export default function Home() {
     setIsConnected(false);
     console.log("Wallet disconnected.");
   };
+
+  async function switchToSepolia() {
+    if (window.ethereum) {
+      try {
+        const sepoliaChainId = '0xaa36a7';
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: sepoliaChainId }],
+        });
+
+        console.log('Successfully switched to Sepolia Testnet');
+      } catch (error) {
+        if (error.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [{
+                chainId: sepoliaChainId,
+                chainName: 'Sepolia Testnet',
+                nativeCurrency: {
+                  name: 'SepoliaETH',
+                  symbol: 'ETH',
+                  decimals: 18,
+                },
+                rpcUrls: ['https://eth-sepolia.g.alchemy.com/v2/yKQ1SFMhX7yakyvZIVXeWBd-sQlb3UK7'],
+                blockExplorerUrls: ['https://sepolia.etherscan.io'],
+              }],
+            });
+          } catch (addError) {
+            console.error('Failed to add Sepolia Testnet', addError);
+          }
+        } else {
+          console.error('Failed to switch to Sepolia Testnet', error);
+        }
+      }
+    } else {
+      console.error('MetaMask is not installed');
+    }
+  }
 
 
   async function handleFund() {
